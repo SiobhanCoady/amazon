@@ -6,8 +6,10 @@ class Product < ApplicationRecord
   validates(:description, { presence: true, length: { minimum: 10 } })
   validates(:price, { presence: true,
                       numericality: { greater_than: 0 } })
+  # validates(:sale_price, { numericality: { less_than_or_equal_to: self.price } })
 
   validate :price_is_valid_decimal_precision
+  validate :sale_price_is_not_greater_than_price
 
   after_initialize :set_defaults
   before_save :capitalize_title
@@ -25,8 +27,15 @@ class Product < ApplicationRecord
     end
   end
 
+  def sale_price_is_not_greater_than_price
+    if sale_price > price
+      errors.add(:sale_price, "The sale price must not be greater than the price.")
+    end
+  end
+
   def set_defaults
     self.price ||= 1
+    self.sale_price ||= self.price
   end
 
   def capitalize_title

@@ -4,6 +4,14 @@ class User < ApplicationRecord
   validates(:email, { presence: true })
 
   def self.search(search_term)
-    where(['first_name LIKE ? OR last_name LIKE ? OR email LIKE ?', "#{search_term}", "#{search_term}", "#{search_term}"])
+    where(['first_name ILIKE ? OR last_name ILIKE ? OR email ILIKE ?', "%#{search_term}%", "%#{search_term}%", "%#{search_term}%"])
+  end
+
+  def self.created_after(date)
+    where(['created_at > ?', "#{date}"])
+  end
+
+  def self.is_not(name)
+    where('first_name != ? AND last_name != ?', "#{name}", "#{name}")
   end
 end

@@ -5,7 +5,7 @@ class Product < ApplicationRecord
                                    message: "%{value} is reserved." } })
   validates(:description, { presence: true, length: { minimum: 10 } })
   validates(:price, { presence: true,
-                      numericality: { greater_than: 0 } })
+                      numericality: { greater_than: 0, less_than: 1000 } })
   # validates(:sale_price, { numericality: { less_than_or_equal_to: self.price } })
 
   validate :price_is_valid_decimal_precision
@@ -16,6 +16,12 @@ class Product < ApplicationRecord
 
   def self.search(string)
     where(['title ILIKE ? OR description ILIKE ?', "%#{string}%", "%#{string}%"]).order(['description ILIKE ?', "%#{string}%"], ['title ILIKE ?', "%#{string}%"])
+  end
+
+  def self.sort_filter(search_term, sort_by_column, current_page, per_page_count)
+    if current_page > 0
+      where(['title ILIKE ? OR description ILIKE ?', "%#{search_term}%", "%#{search_term}%"]).order(sort_by_column).limit(per_page_count).offset((current_page - 1) * per_page_count)
+    end
   end
 
   private

@@ -1,4 +1,7 @@
 class Product < ApplicationRecord
+  belongs_to :category
+  has_many :reviews
+
   validates(:title, { presence: true,
                       uniqueness: { case_sensitive: false },
                       exclusion: { in: %w(Apple Microsoft Sony),

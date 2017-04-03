@@ -5,7 +5,9 @@ Rails.application.routes.draw do
   get('/contact', { to: 'contact#index' })
   post('/contact', { to: 'contact#create', as: 'contact_submit' })
 
-  resources :products
+  resources :products do
+    resources :reviews, only: [:create, :destroy]
+  end
   # get('/products/new', { to: 'products#new', as: 'new_product' })
   # get('/products', { to: 'products#index' })
   # post('/products', { to: 'products#create' })

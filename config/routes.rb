@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   # get('/products/:id/edit', { to: 'products#edit', as: 'edit_product' })
   # patch('/products/:id', { to: 'products#update' })
 
+  resources :users, only: [:new, :create]
 
   root 'welcome#index'
 

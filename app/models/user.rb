@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   validates(:first_name, { presence: true })
   validates(:last_name, { presence: true })
-  validates(:email, { presence: true })
+  validates(:email, { presence: true, uniqueness: true })
 
   def self.search(search_term)
     where(['first_name ILIKE ? OR last_name ILIKE ? OR email ILIKE ?', "%#{search_term}%", "%#{search_term}%", "%#{search_term}%"])

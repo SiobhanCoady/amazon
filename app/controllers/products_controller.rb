@@ -1,4 +1,6 @@
 class ProductsController < ApplicationController
+  before_action :authenticate_user!, except: [:show, :index]
+  
   before_action :find_product, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, except: [:index, :show]
 
@@ -26,19 +28,26 @@ class ProductsController < ApplicationController
   end
 
   def edit
+    redirect_to root_path, alert: 'Access denied' unless can? :edit, @product
   end
 
   def update
-    if @product.update(product_params)
-      redirect_to product_path(@product)
+    if !(can? :edit, @product)
+      redirect_to root_path, alert: 'Access denied' unless can? :edit, @product
+    elsif @product.update(product_params)
+      redirect_to product_path(@product), notice: 'Product Updated'
     else
       render :edit
     end
   end
 
   def destroy
-    @product.destroy
-    redirect_to products_path
+    if can? :destroy, @product
+      @product.destroy
+      redirect_to products_path, notice: 'Product Deleted'
+    else
+      redirect_to root_path, alert: 'Access denied'
+    end
   end
 
   private

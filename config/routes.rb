@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   post('/contact', { to: 'contact#create', as: 'contact_submit' })
 
   resources :products do
-    resources :reviews, only: [:create, :destroy]
+    resources :reviews, only: [:create, :update, :destroy]
   end
   # get('/products/new', { to: 'products#new', as: 'new_product' })
   # get('/products', { to: 'products#index' })
@@ -20,6 +20,10 @@ Rails.application.routes.draw do
 
   resources :sessions, only: [:new, :create] do
     delete :destroy, on: :collection
+  end
+
+  namespace :admin do
+    resources :dashboard, only: [:index]
   end
 
   root 'welcome#index'

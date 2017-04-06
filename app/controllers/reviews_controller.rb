@@ -20,4 +20,15 @@ class ReviewsController < ApplicationController
     review.destroy
     redirect_to product_path(review.product), notice: 'Review deleted'
   end
+
+  def update
+    review = Review.find(params[:id])
+    if review.is_hidden?
+      review.update({ is_hidden: false })
+      redirect_to product_path(review.product), notice: 'Review shown'
+    else
+      review.update({ is_hidden: true })
+      redirect_to product_path(review.product), notice: 'Review hidden'
+    end
+  end
 end

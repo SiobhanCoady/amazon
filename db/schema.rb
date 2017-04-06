@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170403213548) do
+ActiveRecord::Schema.define(version: 20170404225453) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,7 +30,9 @@ ActiveRecord::Schema.define(version: 20170403213548) do
     t.float    "sale_price"
     t.integer  "hit_count"
     t.integer  "category_id"
+    t.integer  "user_id"
     t.index ["category_id"], name: "index_products_on_category_id", using: :btree
+    t.index ["user_id"], name: "index_products_on_user_id", using: :btree
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -39,17 +41,23 @@ ActiveRecord::Schema.define(version: 20170403213548) do
     t.integer  "product_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "user_id"
     t.index ["product_id"], name: "index_reviews_on_product_id", using: :btree
+    t.index ["user_id"], name: "index_reviews_on_user_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
     t.string   "first_name"
     t.string   "last_name"
     t.string   "email"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "password_digest"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
   end
 
   add_foreign_key "products", "categories"
+  add_foreign_key "products", "users"
   add_foreign_key "reviews", "products"
+  add_foreign_key "reviews", "users"
 end

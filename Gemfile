@@ -41,6 +41,8 @@ gem 'cowsay'
 # gem 'capistrano-rails', group: :development
 
 group :development, :test do
+  gem 'rails-controller-testing'
+  gem 'factory_girl_rails'
   gem 'rspec-rails'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri

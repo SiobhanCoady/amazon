@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe ProductsController, type: :controller do
-  let(:product) { FactoryGirl.create(:product) }
-  let(:product_1) { FactoryGirl.create(:product) }
+  let(:user) { FactoryGirl.create(:user) }
+  let(:product) { FactoryGirl.create(:product, { user: user }) }
+  let(:product_1) { FactoryGirl.create(:product, { user: user }) }
 
   describe '#index' do
     it 'assigns a variable for all the products' do
@@ -32,7 +33,9 @@ RSpec.describe ProductsController, type: :controller do
   end
 
   describe '#new' do
+    before { request.session[:user_id] = user.id }
     it 'assigns an instance variable' do
+
       get :new
       expect(assigns(:product)).to be_a_new(Product)
     end
@@ -43,6 +46,7 @@ RSpec.describe ProductsController, type: :controller do
   end
 
   describe '#create' do
+    before { request.session[:user_id] = user.id }
     context 'with valid attributes' do
       def valid_request
         post :create, params: {
@@ -85,6 +89,7 @@ RSpec.describe ProductsController, type: :controller do
   end
 
   describe '#edit' do
+    before { request.session[:user_id] = user.id }
     it 'assigns a variable for the product given an id' do
       get :edit, params: { id: product.id }
       expect(assigns(:product)).to eq(product)
@@ -97,6 +102,7 @@ RSpec.describe ProductsController, type: :controller do
   end
 
   describe '#update' do
+    before { request.session[:user_id] = user.id }
     def valid_request(product_id, attributes)
       post :update, params: { id: product_id,
                               product: attributes

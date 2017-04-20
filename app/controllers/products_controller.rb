@@ -11,6 +11,7 @@ class ProductsController < ApplicationController
     @product.user = current_user
 
     if @product.save
+      ProductsMailer.new_product_confirmation(@product).deliver_now
       redirect_to product_path(@product), notice: 'Product created'
     else
       render :new

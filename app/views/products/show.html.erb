@@ -3,6 +3,21 @@
 <p><%= @product.user.first_name %></p>
 <p><strong>Category: </strong><%= @product.category&.name %></p>
 
+<p>
+  <% if user_signed_in? && can?(:favourite, @product) %>
+    <% if @product.favourited_by?(current_user) %>
+      <%= link_to(
+        fa_icon('star'),
+        favourite_path(@product.favourite_for(current_user)),
+        method: :delete
+      ) %>
+    <% else %>
+      <%= link_to fa_icon('star-o'), product_favourites_path(@product), method: :post %>
+    <% end %>
+  <% end %>
+  <span><%= pluralize(@product.favourites.count, 'favourite') %></span>
+</p>
+
 <% if can? :edit, @product %>
   <%= link_to 'Edit', edit_product_path(@product) %>
 <% end %>
@@ -30,13 +45,29 @@
       <p><%= review.body %></p>
       <p><%= review.user.first_name %></p>
       <p><strong>Rating: </strong><%= review.rating %></p>
+
+      <p>
+        <% if user_signed_in? && can?(:like, review) %>
+          <% if review.liked_by?(current_user) %>
+            <%= link_to(
+              fa_icon('heart'),
+              like_path(review.like_for(current_user)),
+              method: :delete
+            ) %>
+          <% else %>
+            <%= link_to fa_icon('heart-o'), review_likes_path(review), method: :post %>
+          <% end %>
+        <% end %>
+        <span><%= pluralize(review.likes.count, 'like') %></span>
+      </p>
+
       <% if can? :edit, @product %>
-        <%= link_to 'Show', product_review_path(@product, review), method: :patch %>
+        <%= link_to 'Show', review_path(review), method: :patch %>
       <% end %>
       <% if can? :destroy, review %>
         <%= link_to(
         'Delete',
-        product_review_path(@product, review),
+        review_path(review),
         method: :delete,
         data: { confirm: 'Are you sure?' }
         ) %>
@@ -49,13 +80,30 @@
       <p><%= review.body %></p>
       <p><%= review.user.first_name %></p>
       <p><strong>Rating: </strong><%= review.rating %></p>
+
+      <p>
+        <% if user_signed_in? && can?(:like, review) %>
+          <% if review.liked_by?(current_user) %>
+            <%= link_to(
+              fa_icon('heart'),
+              like_path(review.like_for(current_user)),
+              method: :delete
+            ) %>
+          <% else %>
+            <%= link_to fa_icon('heart-o'), review_likes_path(review), method: :post %>
+          <% end %>
+        <% end %>
+        <span><%= pluralize(review.likes.count, 'like') %></span>
+      </p>
+
+
       <% if can? :edit, @product %>
-        <%= link_to 'Hide', product_review_path(@product, review), method: :patch %>
+        <%= link_to 'Hide', review_path(review), method: :patch %>
       <% end %>
       <% if can? :destroy, review %>
         <%= link_to(
         'Delete',
-        product_review_path(@product, review),
+        review_path(review),
         method: :delete,
         data: { confirm: 'Are you sure?' }
         ) %>

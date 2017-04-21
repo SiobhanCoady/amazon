@@ -5,18 +5,16 @@ Rails.application.routes.draw do
   get('/contact', { to: 'contact#index' })
   post('/contact', { to: 'contact#create', as: 'contact_submit' })
 
-  resources :products do
-    resources :reviews, only: [:create, :update, :destroy]
+  resources :products, shallow: true do
+    resources :reviews, only: [:create, :update, :destroy] do
+      resources :likes, only: [:create, :destroy]
+    end
+    resources :favourites, only: [:create, :destroy]
   end
-  # get('/products/new', { to: 'products#new', as: 'new_product' })
-  # get('/products', { to: 'products#index' })
-  # post('/products', { to: 'products#create' })
-  # get('/products/:id', { to: 'products#show', as: 'product' })
-  # delete('/products/:id', { to: 'products#destroy' })
-  # get('/products/:id/edit', { to: 'products#edit', as: 'edit_product' })
-  # patch('/products/:id', { to: 'products#update' })
 
-  resources :users, only: [:new, :create]
+  resources :users, only: [:new, :create] do
+    resources :favourites, only: [:index]
+  end
 
   resources :sessions, only: [:new, :create] do
     delete :destroy, on: :collection

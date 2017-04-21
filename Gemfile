@@ -36,6 +36,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'cancancan', '~> 1.10'
 gem 'faker'
 gem 'cowsay'
+gem 'font-awesome-rails'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

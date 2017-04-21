@@ -4,6 +4,12 @@ class User < ApplicationRecord
   has_many :products
   has_many :reviews
 
+  has_many :likes, dependent: :destroy
+  has_many :liked_reviews, through: :likes, source: :review
+
+  has_many :favourites, dependent: :destroy
+  has_many :favourited_products, through: :favourites, source: :product
+
   validates(:first_name, { presence: true })
   validates(:last_name, { presence: true })
   validates(:email, { presence: true, uniqueness: true })

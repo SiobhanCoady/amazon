@@ -3,6 +3,9 @@ class Product < ApplicationRecord
   belongs_to :user
   has_many :reviews
 
+  has_many :favourites, dependent: :destroy
+  has_many :users, through: :favourites
+
   validates(:title, { presence: true,
                       uniqueness: { case_sensitive: false },
                       exclusion: { in: %w(Apple Microsoft Sony),
@@ -26,6 +29,14 @@ class Product < ApplicationRecord
     if current_page > 0
       where(['title ILIKE ? OR description ILIKE ?', "%#{search_term}%", "%#{search_term}%"]).order(sort_by_column).limit(per_page_count).offset((current_page - 1) * per_page_count)
     end
+  end
+
+  def favourited_by?(user)
+    favourites.exists?(user: user)
+  end
+
+  def favourite_for(user)
+    favourites.find_by(user: user)
   end
 
   private

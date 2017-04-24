@@ -24,6 +24,7 @@ class ProductsController < ApplicationController
 
   def show
     @review = Review.new
+    @tags = @product.tags
   end
 
   def edit
@@ -56,6 +57,11 @@ class ProductsController < ApplicationController
   end
 
   def product_params
-    params.require(:product).permit([:title, :description, :price, :category_id])
+    params.require(:product).permit([ :title,
+                                      :description,
+                                      :price,
+                                      :category_id,
+                                      { tag_ids: [] }
+                                    ])
   end
 end

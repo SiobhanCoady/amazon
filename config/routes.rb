@@ -20,6 +20,8 @@ Rails.application.routes.draw do
     delete :destroy, on: :collection
   end
 
+  resources :tags, only: [:index, :show]
+
   namespace :admin do
     resources :dashboard, only: [:index]
   end

@@ -37,6 +37,7 @@ gem 'cancancan', '~> 1.10'
 gem 'faker'
 gem 'cowsay'
 gem 'font-awesome-rails'
+gem 'chosen-rails'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

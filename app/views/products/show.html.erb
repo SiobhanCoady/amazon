@@ -85,6 +85,29 @@
       <p><%= review.body %></p>
       <p><%= review.user.first_name %></p>
       <p><strong>Rating: </strong><%= review.rating %></p>
+      <p>
+        <% user_vote = review.votes.find_by_user_id current_user %>
+
+        <% if current_user != review.user %>
+          <% if user_vote.nil? %>
+            <%= link_to 'Vote Up', review_votes_path(review, is_up: true),
+                  method: :post %>
+            <%= link_to 'Vote Down', review_votes_path(review, is_up: false),
+                  method: :post %>
+          <% elsif user_vote.is_up? %>
+            <%= link_to 'Delete Vote', vote_path(user_vote), method: :delete %>
+            <%= link_to 'Vote Down', vote_path(user_vote, is_up: false),
+                  method: :patch %>
+          <% else %>
+            <%= link_to 'Vote Up', vote_path(user_vote, is_up: true),
+                  method: :patch %>
+            <%= link_to 'Delete Vote', vote_path(user_vote), method: :delete %>
+          <% end %>
+        <% else %>
+          Votes:
+        <% end %>
+        <span>( <%= review.votes_count %> )</span>
+      </p>
 
       <p>
         <% if user_signed_in? && can?(:like, review) %>

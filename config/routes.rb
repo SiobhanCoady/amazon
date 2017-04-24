@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resources :products, shallow: true do
     resources :reviews, only: [:create, :update, :destroy] do
       resources :likes, only: [:create, :destroy]
+      resources :votes, only: [:create, :update, :destroy]
     end
     resources :favourites, only: [:create, :destroy]
   end

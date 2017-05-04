@@ -27,6 +27,10 @@ class ProductsController < ApplicationController
     # @reviews = @product.reviews
     @reviews = Review.sort_by_votes(@product.reviews)
     @tags = @product.tags
+    respond_to do |format|
+      format.html { render :show }
+      format.json { render json: @product }
+    end
   end
 
   def edit

@@ -17,6 +17,10 @@ class User < ApplicationRecord
   validates(:last_name, { presence: true })
   validates(:email, { presence: true, uniqueness: true })
 
+  before_validation :downcase_email
+  before_create :generate_api_token
+  # User.where(api_token: nil).each {|u| u.update(api_token: SecureRandom.urlsafe_base64(32)) }
+
   def self.search(search_term)
     where(['first_name ILIKE ? OR last_name ILIKE ? OR email ILIKE ?', "%#{search_term}%", "%#{search_term}%", "%#{search_term}%"])
   end
@@ -31,5 +35,18 @@ class User < ApplicationRecord
 
   def full_name
     "#{first_name} #{last_name}".titleize
+  end
+
+  private
+
+  def generate_api_token
+    loop do
+      self.api_token = SecureRandom.urlsafe_base64(32)
+      break unless User.exists?(api_token: self.api_token)
+    end
+  end
+
+  def downcase_email
+    self.email.downcase! if email.present?
   end
 end

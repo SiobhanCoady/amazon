@@ -5,6 +5,12 @@ Rails.application.routes.draw do
   get('/contact', { to: 'contact#index' })
   post('/contact', { to: 'contact#create', as: 'contact_submit' })
 
+  namespace :api, defaults: { format: :json } do
+    namespace :v1 do
+      resources :products, only: [:index, :show]
+    end
+  end
+
   resources :products, shallow: true do
     resources :reviews, only: [:create, :update, :destroy] do
       resources :likes, only: [:create, :destroy]

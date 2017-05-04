@@ -22,4 +22,8 @@ class Review < ApplicationRecord
     votes.where(is_up: true).count - votes.where(is_up: false).count
   end
 
+  def self.sort_by_votes(reviews)
+    reviews.sort_by {|review| review.votes_count }.reverse
+  end
+
 end

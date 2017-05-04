@@ -24,6 +24,8 @@ class ProductsController < ApplicationController
 
   def show
     @review = Review.new
+    # @reviews = @product.reviews
+    @reviews = Review.sort_by_votes(@product.reviews)
     @tags = @product.tags
   end
 

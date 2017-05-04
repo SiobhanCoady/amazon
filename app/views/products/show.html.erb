@@ -44,7 +44,7 @@
 
 <hr>
 
-<% @product.reviews.each do |review| %>
+<% @reviews.each do |review| %>
   <% if (can? :edit, @product) && review.is_hidden? %>
     <div class="well" style="background-color: darkgrey">
       <p><%= review.body %></p>

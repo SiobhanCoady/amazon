@@ -1,7 +1,4 @@
-class Api::V1::ProductsController < ApplicationController
-  skip_before_filter :verify_authenticity_token
-  before_action :authenticate_user
-
+class Api::V1::ProductsController < Api::BaseController
   def index
     @products = Product.all
   end
@@ -17,16 +14,11 @@ class Api::V1::ProductsController < ApplicationController
     if @product.save
       render json: "Product created!"
     else
-      render json: "There was an error"
+      render json: @product.errors.full_messages
     end
   end
 
   private
-
-  def authenticate_user
-    @user = User.find_by_api_token params[:api_token]
-    head :unauthorized if @user.nil?
-  end
 
   def product_params
     params.require(:product).permit([ :title,

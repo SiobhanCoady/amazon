@@ -1,6 +1,6 @@
 class Api::V1::ProductsController < Api::BaseController
   def index
-    @products = Product.all
+    @products = Product.order(created_at: :desc)
   end
 
   def show

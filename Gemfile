@@ -38,6 +38,7 @@ gem 'faker'
 gem 'cowsay'
 gem 'font-awesome-rails'
 gem 'chosen-rails'
+gem 'rack-cors'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

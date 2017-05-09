@@ -13,6 +13,7 @@ class Product < ApplicationRecord
   friendly_id :title, use: [:slugged, :history, :finders]
 
   mount_uploader :image, ImageUploader
+  mount_uploader :file, FileUploader
 
   validates(:title, { presence: true,
                       uniqueness: { case_sensitive: false },

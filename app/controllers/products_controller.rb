@@ -35,6 +35,7 @@ class ProductsController < ApplicationController
   end
 
   def edit
+    @categories = Category.all
     redirect_to root_path, alert: 'Access denied' unless can? :edit, @product
   end
 
@@ -69,7 +70,8 @@ class ProductsController < ApplicationController
                                       :price,
                                       :category_id,
                                       { tag_ids: [] },
-                                      :image
+                                      :image,
+                                      :file
                                     ])
   end
 end

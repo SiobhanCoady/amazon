@@ -8,6 +8,13 @@
     <%= link_to tag.name, tag_path(tag.id) %>
   <% end %>
 </p>
+<p>
+  <% if @product.file.present? %>
+    <%= link_to @product.file.url do %>
+      <%= image_tag('file.png', height: '50px') %>
+    <% end %>
+  <% end %>
+</p>
 
 <p>
   <% if user_signed_in? && can?(:favourite, @product) %>

@@ -9,6 +9,9 @@ class Product < ApplicationRecord
   has_many :taggings, dependent: :destroy
   has_many :tags, through: :taggings
 
+  extend FriendlyId
+  friendly_id :title, use: [:slugged, :history, :finders]
+
   validates(:title, { presence: true,
                       uniqueness: { case_sensitive: false },
                       exclusion: { in: %w(Apple Microsoft Sony),

@@ -39,6 +39,7 @@ gem 'cowsay'
 gem 'font-awesome-rails'
 gem 'chosen-rails'
 gem 'rack-cors'
+gem 'friendly_id'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

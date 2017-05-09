@@ -40,7 +40,7 @@ class ProductsController < ApplicationController
   def update
     if !(can? :edit, @product)
       redirect_to root_path, alert: 'Access denied'
-    elsif @product.update(product_params)
+    elsif @product.update(product_params.merge({ slug: nil }))
       redirect_to product_path(@product), notice: 'Product Updated'
     else
       render :edit

@@ -4,5 +4,6 @@
   <%= f.input :price %>
   <%= f.association :tags, input_html: { class: 'chosen-select' } %>
   <%= f.input :category, collection: @categories %>
+  <%= f.input :image %>
   <%= f.submit class: 'btn btn-primary' %>
 <% end %>

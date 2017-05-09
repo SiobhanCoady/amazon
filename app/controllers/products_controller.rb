@@ -68,7 +68,8 @@ class ProductsController < ApplicationController
                                       :description,
                                       :price,
                                       :category_id,
-                                      { tag_ids: [] }
+                                      { tag_ids: [] },
+                                      :image
                                     ])
   end
 end

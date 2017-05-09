@@ -12,6 +12,8 @@ class Product < ApplicationRecord
   extend FriendlyId
   friendly_id :title, use: [:slugged, :history, :finders]
 
+  mount_uploader :image, ImageUploader
+
   validates(:title, { presence: true,
                       uniqueness: { case_sensitive: false },
                       exclusion: { in: %w(Apple Microsoft Sony),

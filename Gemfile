@@ -41,6 +41,9 @@ gem 'chosen-rails'
 gem 'rack-cors'
 gem 'friendly_id'
 gem 'simple_form'
+gem 'carrierwave'
+gem 'mini_magick'
+gem 'fog'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

@@ -10,8 +10,12 @@
 </p>
 <p>
   <% if @product.file.present? %>
-    <%= link_to @product.file.url do %>
-      <%= image_tag('file.png', height: '50px') %>
+    <% if ['.jpg', '.jpeg', '.png', '.gif'].any? { |ext| @product.file.url.include? ext } %>
+      <%= image_tag @product.file.url(:large) %>
+    <% else %>
+      <%= link_to @product.file.url do %>
+        <%= image_tag('file.png', height: '50px') %>
+      <% end %>
     <% end %>
   <% end %>
 </p>
